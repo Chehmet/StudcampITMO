@@ -28,3 +28,24 @@
 
 ### Следующие шаги:
 Детальное планирование, выбор инструментов, старт парсинга.
+
+### Prerequisits:
+
+Install uv:
+
+```sh
+pip install uv
+```
+
+Create virtual environment:
+
+```sh
+uv venv
+```
+
+Install dependencies:
+
+```sh
+uv sync pyproject.toml
+```
+
