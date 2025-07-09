@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 import time
 import random
 import os
+import re
 
 class DromAutoParser:
     def __init__(self):
@@ -40,6 +41,7 @@ class DromAutoParser:
                 "Поколение": None,
                 "Комплектация": None,
                 "URL": car_url,
+                "Дата публикации": None,
             }
 
             title = soup.find('h1', {'class': 'css-6tq1oz e18vbajn0'})
@@ -98,6 +100,13 @@ class DromAutoParser:
                             car_info['Поколение'] = value
                         elif 'Комплектация' in label:
                             car_info['Комплектация'] = value
+
+            published = soup.find('div', class_='css-pxeubi evnwjo70')
+            if published:
+                match = re.search(r'от (\d{2}\.\d{2}\.\d{4})', published.text)
+                if match:
+                    car_info["Дата публикации"] = match.group(1)
+
 
             return car_info
 
@@ -167,7 +176,7 @@ class DromAutoParser:
 
 if __name__ == "__main__":
     parser = DromAutoParser()
-    for i in range(3):
+    for i in range(100):
         print(f"\n=== Итерация {i+1} ===")
         parser.parse(pages=10, output_file='cars.json')
         time.sleep(random.uniform(2, 4))
