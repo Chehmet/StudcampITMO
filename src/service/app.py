@@ -44,6 +44,10 @@ class PredictRequest(BaseModel):
 def root():
     return {"message": "Car Market Analysis API (Russia)"}
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.post("/predict")
 def predict(request: PredictRequest):
     try:
